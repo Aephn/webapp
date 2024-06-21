@@ -10,7 +10,7 @@ if not os.path.exists(app.config['UPLOAD_FOLDER']):
 
 @app.route('/')
 def index():
-    return render_template('maptile.html')
+    return render_template('maptile.html')   # load html template
 
 @app.route('/upload', methods=['POST'])
 def upload_file():
@@ -31,4 +31,4 @@ def upload_file():
 
 
 if __name__ == '__main__':
-    app.run(host="localhost", debug=True)
+    app.run(host="localhost", debug=True) 

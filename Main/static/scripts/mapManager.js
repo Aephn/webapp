@@ -42,13 +42,15 @@ var location_icon = L.icon({
 
 function markerAnimation(marker) {
     // Marker Bobbing Animations
+    var marker_displacement = 5;   // Specifies how much the marker is displaced
+
     marker.on("click", function() {
         var pos = map.latLngToLayerPoint(marker.getLatLng());
-        pos.y -= 5;
+        pos.y -= marker_displacement;
         var fx = new L.PosAnimation();
   
         fx.once('end',function() {
-            pos.y += 5;
+            pos.y += marker_displacement;
             fx.run(marker._icon, pos, 0.8);
             });
         fx.run(marker._icon, pos, 0.3);
