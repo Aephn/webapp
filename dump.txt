@@ -1,0 +1,79 @@
+// Marker Animations
+myPositionMarker.on("click", function() {
+  var pos = map.latLngToLayerPoint(myPositionMarker.getLatLng());
+  pos.y -= 5;
+  var fx = new L.PosAnimation();
+
+  fx.once('end',function() {
+      pos.y += 5;
+      fx.run(myPositionMarker._icon, pos, 0.8);
+  });
+  fx.run(myPositionMarker._icon, pos, 0.3);
+});
+
+
+
+// Jawg layer testing (ACCESS TOKEN INSIDE)
+var MapTile_JawgLagoon = L.tileLayer('https://tile.jawg.io/jawg-lagoon/{z}/{x}/{y}{r}.png?access-token={accessToken}', {
+    attribution: '<a href="https://jawg.io" title="Tiles Courtesy of Jawg Maps" target="_blank">&copy; <b>Jawg</b>Maps</a> &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+    minZoom: 0,
+    maxZoom: 22,
+    accessToken: 'Mk2XMa0mf65s97gaaKZ1Kta6vaoMsp3njJVG5uooQZT9SwflELWRhK5NLpKlA1AN'  // Be careful of this
+});
+MapTile_JawgLagoon.addTo(map)
+
+
+
+
+// Handles Cursor Events
+L.CursorHandler = L.Handler.extend( {
+    addHooks: function () {   // Called when handler added to map
+        // this._popup = new L.Popup();
+        // this._map.on('mouseover', this._open, this);   // Creates Event Listeners for movement in map
+        // this._map.on('mousemove', this._update, this);
+        // this._map.on('mouseout', this._close, this);
+        this._map.on('dblclick', this._addMarker, this);
+    },
+
+    removeHooks: function () {   // Called when handler removed from map
+        // this._map.off('mouseover', this._open, this);   // Removes Event Listeners
+        // this._map.off('mousemove', this._update, this);
+        // this._map.off('mouseout', this._close, this);
+        this._map.off('dblclick', this._addMarker, this);
+    },
+    
+    _open: function (e) {   // Called when cursor enters map
+        this._update(e);
+        this._popup.openOn(this._map);
+    },
+
+    _close: function () {   // Called when cursor exits map
+        this._map.closePopup(this._popup);
+    },
+
+    _update: function (e) {
+        this._popup.setLatLng(e.latlng)
+            .setContent(e.latlng.toString());
+    },
+
+    _addMarker: function(e) {
+        createPin(e.latlng, "Marker")
+    }
+});
+
+
+<form
+        enctype="multipart/form-data"
+        action="/upload"
+        method="post">
+
+    <label for="myfile"> Select a file: </label>
+
+    <input
+        type="file"
+        name="myfile"
+        accept="image/*"
+    />
+    <br />
+    <input type="submit" value="Upload"/>
+    </form>

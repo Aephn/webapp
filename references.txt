@@ -1,0 +1,50 @@
+
+Leaflet? Use for Map! https://leafletjs.com/index.html
+
+Map API: https://leafletjs.com/
+Map Docs https://leafletjs.com/reference.html
+Tutorial: https://www.youtube.com/watch?v=ls_Eue1xUtY&list=PLyWyQBSWLw1NH1wsA0wkSMTlQ45P0AqCj
+
+Map Style Database: https://leaflet-extras.github.io/leaflet-providers/preview/
+JAWG Map Tokens: https://www.jawg.io/lab/access-tokens
+
+Icon1: https://www.flaticon.com/packs/communication-939
+Icon2: https://www.flaticon.com/free-icon/location_10613663 
+
+
+
+
+Current TO-DO:
+- Make the ability to create new pins at a location
+- Dragging Pins to a new location?
+- Be able to take input from a dropped pin (or being able to take input in general)
+- Linking html file to the python file & take the input
+
+
+
+Other Stuff:
+
+// OSM layer testing
+  var OpenStreetMap = L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+  }).addTo(map);
+
+var Jawg_Dark = L.tileLayer('https://tile.jawg.io/jawg-dark/{z}/{x}/{y}{r}.png?access-token={accessToken}', {
+	attribution: '<a href="https://jawg.io" title="Tiles Courtesy of Jawg Maps" target="_blank">&copy; <b>Jawg</b>Maps</a> &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+	minZoom: 0,
+	maxZoom: 22,
+	accessToken: 'Mk2XMa0mf65s97gaaKZ1Kta6vaoMsp3njJVG5uooQZT9SwflELWRhK5NLpKlA1AN'
+});
+
+var Jawg_Lagoon = L.tileLayer('https://tile.jawg.io/jawg-lagoon/{z}/{x}/{y}{r}.png?access-token={accessToken}', {
+	attribution: '<a href="https://jawg.io" title="Tiles Courtesy of Jawg Maps" target="_blank">&copy; <b>Jawg</b>Maps</a> &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+	minZoom: 0,
+	maxZoom: 22,
+	accessToken: 'Mk2XMa0mf65s97gaaKZ1Kta6vaoMsp3njJVG5uooQZT9SwflELWRhK5NLpKlA1AN'
+});
+
+// I Don't think this use is allowed
+  var googleStreets = L.tileLayer('http://{s}.google.com/vt/lyrs=m&x={x}&y={y}&z={z}',{
+    maxZoom: 20,
+    subdomains:['mt0','mt1','mt2','mt3']
+});
