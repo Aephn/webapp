@@ -1,16 +1,20 @@
 from flask import Flask, request, redirect, url_for, render_template
 import os
 
+
 app = Flask(__name__)
 app.config['UPLOAD_FOLDER'] = 'uploads/'   # define an upload folder
+
 
 # Ensure the upload folder exists
 if not os.path.exists(app.config['UPLOAD_FOLDER']):
     os.makedirs(app.config['UPLOAD_FOLDER'])
 
+
 @app.route('/')
 def index():
     return render_template('maptile.html')   # load html template
+
 
 @app.route('/upload', methods=['POST'])
 def upload_file():
