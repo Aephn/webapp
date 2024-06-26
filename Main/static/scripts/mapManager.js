@@ -82,7 +82,7 @@ class Pin {
             var popupContent = '<h2>Upload an Image </h2>'+
             '<p>(jpg, png, jpeg)</p>' +
             '<form action="/upload" method="post" enctype="multipart/form-data">'+
-            '<input type="file" name="file" accept="image/*">' +
+            '<input type="file" name="image_file" accept="image/*" multiple><br><br>' +
             '<input type="submit" value="Upload">' +
             '</form>';
                 

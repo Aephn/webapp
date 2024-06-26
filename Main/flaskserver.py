@@ -1,4 +1,5 @@
 from flask import Flask, request, redirect, url_for, render_template
+from werkzeug.utils import secure_filename   # import for secure file name processing
 import os
 
 # maybe good to look into: https://flask-wtf.readthedocs.io/en/1.2.x/
@@ -6,18 +7,18 @@ import os
 # Helpful: https://blog.miguelgrinberg.com/post/handling-file-uploads-with-flask
 
 app = Flask(__name__)
-app.config['UPLOAD_FOLDER'] = 'uploads/'   # define an upload folder
+app.config['UPLOAD_PATH'] = 'uploads/'   # define an upload folder
 app.config['MAX_CONTENT_LENGTH'] = 1000 * 1000 # max file upload size of 1 mb.
-Allowed_Extensions = {'jpg', 'png', 'jpeg'}   # allowed file extensions
+Allowed_File_Extensions = {'jpg', 'png', 'jpeg'}
 
 
 # Ensure the upload folder exists
-if not os.path.exists(app.config['UPLOAD_FOLDER']):
-    os.makedirs(app.config['UPLOAD_FOLDER'])
+if not os.path.exists(app.config['UPLOAD_PATH']):
+    os.makedirs(app.config['UPLOAD_PATH'])
 
 def allowed_file(filename):   # check if the file submitted is valid.
     return '.' in filename and \
-        filename.split('.', 1)[1].lower() in Allowed_Extensions
+        filename.split('.', 1)[1].lower() in Allowed_File_Extensions
 
 
 @app.route('/')
@@ -27,29 +28,38 @@ def index():
 
 @app.route('/upload', methods=['POST'])
 def upload_file():
-    print("Upload function called")
+    valid_upload_submitted = False
+    
+    DEBUG_filecount_iterable = 0
+    print("Upload function called")   # debug
 
-    if 'file' not in request.files:
+    if 'image_file' not in request.files:
         print("No files!")
         return 'No files!'
-    
-    # uploaded_files = request.files['file']
 
-    for upload in request.files.getlist('file'):
+    for upload in request.files.getlist('image_file'):
         if upload.filename == '':
             print("Error: Blank File!")
             continue   # check if this is bad!
             # return 'Error: Blank File!'
     
         if upload and allowed_file(upload.filename):
-            filename = upload.filename
-            filepath = os.path.join(app.config['UPLOAD_FOLDER'], filename)
+            filename = secure_filename(upload.filename)   # cleans possible malicious filenames 
+
+            filepath = os.path.join(app.config['UPLOAD_PATH'], filename)
             upload.save(filepath)
-            print(f"File saved: {filepath}")
-            # return redirect(url_for("maptile"))  # error here.
-            return f'File uploaded successfully: {filename}'   # need to figure out a way to return this correctly w/multiple files.
+
+            print(f"DEBUG: File #{DEBUG_filecount_iterable} saved: {filepath}")
+            DEBUG_filecount_iterable+=1
+
+            # return render_template('maptile.html') # works to re-load webpage, but markers aren't stored.
+
+            valid_upload_submitted = True
     
-    return 'No Valid Files Submitted'
+    if (valid_upload_submitted):
+        return f'File(s) uploaded successfully!'
+    else:
+        return 'No Valid Files Submitted'
 
 if __name__ == '__main__':
-    app.run(host="localhost", debug=True)
+    app.run(host="localhost", debug=True)   

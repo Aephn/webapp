@@ -72,93 +72,31 @@ function openPopupmenu(pin) {
     // Need to add an event for on a marker click.
 }
 
+ 
+// python uploading shit
 
-// Class
 
-class Pin {
-    constructor(xy_pos=[0,0], message="Unnamed Marker", popup_on_creation=false) {
+@app.route('/upload', methods=['POST'])
+def upload_file():
+    print("Upload function called")
 
-        var location_icon = L.icon({
-            // Define pin icon and attributes
-            iconUrl: '../static/assets/loc_icon.png',   // path from HTML file to icon.
-            iconSize:     [40, 40],
-            iconAnchor:   [20, 37] // point of the icon which will correspond to marker's location
-            // popupAnchor:  [-50, -30] // point from which the popup should open relative to the iconAnchor
-        });
-
-        // Create Pin + Add Animation
-        this.marker = new L.marker(xy_pos, {
-            icon:location_icon, 
-            opacity:1.0, 
-            alt:message})
-            .addTo(map)
-            .bindPopup(message);   // Need to remove this in favor of creating popup menu
-
-        bobbingAnimation(this.marker);
+    if 'file' not in request.files:
+        print("No file part")
+        return 'No file part'
     
-        // Create popup on the marker if open_popup = true
-        if (open_popup) {
-            createPopupMenu(xy_pos);
-        }
-    }   // create pin and animate it + popup
+    file = request.files['file']
+
+    if file.filename == '':
+        print("No file selected!")
+        return 'No file selected!'
     
-    changePinMessage(pin, message="Unnamed Marker") {
-        // I need to figure out how to select specific pins that are created.
-
-        return;
-    }   // method to change the pin message (NOT DONE)
-        
-    createPopupMenu(xy_pos=[0,0]) {
-        // defines html code for the popup (do I need to initalize this every time?)
-        // There has to be a better way to represent this.
-        var popupContent = '<h2>Upload an Image</h2>' +
-        '<form action="/upload" method="post" enctype="multipart/form-data">'+
-        '<input type="file" name="file" accept="image/*">' +
-        '<input type="submit" value="Upload">' +
-        '</form>';
-            
-        var popup = L.popup({offset: L.point(0, -10)});
-        popup.setLatLng(xy_pos)
-            .addTo(map)
-            .setContent(popupContent);
-        
-        return;
-    }   // method to create a new popup window for the marker.
-        
-    openPopupMenu(marker) {
-        // Need to add an event for on a marker click.
-
-        return;
-    }   // method to re-open the popup window for the marker.
-
-    bobbingAnimation(marker) {
-        // Marker Bobbing Animations
-        var marker_displacement = 5;   // Specifies how much the marker moves
-    
-        marker.on("click", function() {
-            var pos = map.latLngToLayerPoint(marker.getLatLng());
-            pos.y -= marker_displacement;
-            var fx = new L.PosAnimation();
-      
-            fx.once('end',function() {
-                pos.y += marker_displacement;
-                fx.run(marker._icon, pos, 0.8);
-                });
-            fx.run(marker._icon, pos, 0.3);
-        });
-    
-        return;
-    }   // method which defines the bobbing animation of the marker.
-}
-
-
-
-
-
-
-
-
-
+    if file:
+        filename = file.filename
+        filepath = os.path.join(app.config['UPLOAD_FOLDER'], filename)
+        file.save(filepath)
+        print(f"File saved: {filepath}")
+        return redirect(url_for("http://localhost:5000/"))
+        # return f'File uploaded successfully: {filename}'
 
 
 // END END END END END END END END END END END END END
