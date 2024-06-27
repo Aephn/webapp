@@ -1,5 +1,5 @@
-// Handles Cursor Events + Add Handler to Map
-L.CursorHandler = L.Handler.extend( {
+
+L.CursorHandler = L.Handler.extend( {   // Handles Cursor Events + Add Handler to Map
     addHooks: function () {
         this._map.on('dblclick', this._addMarker, this);   // Create listener for double click at startup
     },
@@ -15,8 +15,7 @@ L.CursorHandler = L.Handler.extend( {
 L.Map.addInitHook('addHandler', 'cursor', L.CursorHandler);
 
 
-// map initialization
-var map = L.map('map', {
+var map = L.map('map', {   // map initialization
     center: [0,0],
     zoom: 0,
     cursor: true,
@@ -31,7 +30,7 @@ var map = L.map('map', {
             accessToken: 'Mk2XMa0mf65s97gaaKZ1Kta6vaoMsp3njJVG5uooQZT9SwflELWRhK5NLpKlA1AN'  // Be careful of this
         })
     ],
-}).setView([39.520845889671264, -104.9200172232749], 13);    // Defines where map opens to on startup
+}).setView([33.68127006972219, -117.8194090597511], 13);    // Defines where map opens to on startup
 
 
 class Pin {
@@ -77,17 +76,22 @@ class Pin {
     }   // method to change the pin message (NOT DONE)
         
     createPopupMenu(xy_pos=[0,0]) {
-        // CSS loading gif https://www.w3schools.com/howto/howto_css_loader.asp
+        var popupMaxHeight = 700;
+        var popupMaxWidth = 500;
+
         try {
-            var popupContent = '<h2>Upload an Image </h2>'+
-            '<p>(jpg, png, jpeg)</p>' +
-            '<form action="/upload" method="post" enctype="multipart/form-data">'+
-            '<input type="file" name="image_file" accept="image/*" multiple><br><br>' +
-            '<input type="submit" value="Upload">' +
-            '</form>';
-                
-            var popup = L.popup({offset: L.point(0, -10)});
-            popup.setLatLng(xy_pos)
+            var popupContent = '<iframe width="500" height="400" src="../templates/marker.html"></iframe>';
+            
+
+            // https://www.youtube.com/embed/Vk5-c_v4gMU
+            var popup = L.popup({
+                offset: L.point(0, -10),
+                maxWidth:popupMaxHeight, 
+                maxHeight:popupMaxWidth,
+                autoClose:false,
+                closeOnClick:false
+                });
+            popup.setLatLng(xy_pos,)
                 .addTo(map)
                 .setContent(popupContent);
         } catch (error) {
@@ -96,11 +100,16 @@ class Pin {
         
         return;
     }   // method to create a new popup window for the marker.
-        
+
     openPopupMenu(marker) {
         // Need to add an event for on a marker click.
         return;
     }   // method to re-open the popup window for the marker.
+
+    changePopupContent(newContent) {
+        this.marker.setPopupContent(newContent);
+        return;
+    }   // method to change popup content with new html code
 
     bobbingAnimation(marker) {
         try {
@@ -127,9 +136,9 @@ class Pin {
 
 
 // Default Test Pins
-new Pin([39.56336885892135, -104.87694732273937], "Park Meadows Mall", true);
-new Pin([39.520845889671264, -104.920017223274], "Rock Canyon High School", false);
-new Pin([39.74099425098315, -104.9835222294324], "This is the Capital!", false);
+new Pin([33.64279217005621, -117.84161034087451], "UCI", true);
+new Pin([33.6911993634157, -117.8889016003852], "South Coast Plaza Mall", false);
+new Pin([33.650521067513935, -117.74291965209282], "Irvine Spectrum", false);
 
 
 // Add map scale in bottom left.
