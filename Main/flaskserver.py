@@ -30,8 +30,11 @@ def allowed_file(filename):   # check if submitted file is valid.
 def index():    # load html page
     return render_template('maptile.html')
 
+@app.route('/marker')
+def marker():   # REQUIRED TO WRITE WHEN LOADING NEW HTML TEMPLATES
+    return render_template('marker.html')
 
-@app.route('/', methods=['POST'])
+@app.route('/marker', methods=['POST'])
 def upload_file():
     valid_upload_submitted = False
     
@@ -61,7 +64,7 @@ def upload_file():
             
     if (valid_upload_submitted):
         print("File(s) Uploaded Successful!")
-        return redirect(url_for('index'))  # returns to map page
+        return redirect(url_for('marker'))  # defines which html to return to
     else:
         abort(418)   # I'm a teapot
 
@@ -72,4 +75,4 @@ def upload(filename):
 # @login_required # flask decorator for a login requirement.
 
 if __name__ == '__main__':
-    app.run(host="localhost", debug=True)
+    app.run(debug=True)

@@ -52,7 +52,8 @@ class Pin {
             })
             .addTo(map)
             .bindPopup(message);
-
+            
+            //Debug
             console.log("Marker created:", this.marker);
 
             // Bind methods to ensure correct `this` context
@@ -80,10 +81,8 @@ class Pin {
         var popupMaxWidth = 500;
 
         try {
-            var popupContent = '<iframe width="500" height="400" src="../templates/marker.html"></iframe>';
+            var popupContent = '<iframe width="500" height="400" src="/marker"></iframe>';
             
-
-            // https://www.youtube.com/embed/Vk5-c_v4gMU
             var popup = L.popup({
                 offset: L.point(0, -10),
                 maxWidth:popupMaxHeight, 
