@@ -35,14 +35,14 @@ var map = L.map('map', {   // map initialization
 
 class Pin {
     constructor(xy_pos=[0,0], message="Unnamed Marker", auto_open_popup=false) {
+        /* Create and define parameters for the pin + attached popup */
         try {
-            console.log("Creating a new Pin at position:", xy_pos);
 
-            // pop-up parameters
+            // PARAMETERS
             var popupMaxHeight = 500;
             var popupMaxWidth = 500;
             var popupContent = '<iframe width="400" height="400" src="/marker"></iframe>';
-            // pop-up parameters
+            // PARAMETERS
 
 
             // load icon & define how image is positioned
@@ -80,21 +80,25 @@ class Pin {
         } catch (error) {
             console.error("Error in Pin creation.", error);
         }
-    }   // create pin and animate it + popup
+    }
     
-    changePinMessage(pin, message="Unnamed Marker") {
-        // I need to figure out how to select specific pins that are created.
+    changePinMessage(message="<p>ERROR -> Blank Message.</p>") {
+        /* Not exactly sure what to do with this yet. */
         return;
-    }   // method to change the pin message (NOT DONE)
+    }
 
-    changePopupContent(newContent) {
+    changePopupContent(newContent="<p>ERROR -> Blank Content.</p>") {
+        /* Method to change popup content with new html code */
         this.marker.setPopupContent(newContent);
         return;
-    }   // method to change popup content with new html code
+    } 
 
     bobbingAnimation(marker) {
+        /* Method which defines and adds the bobbing animation for a marker. */
         try {
+            // PARAMETERS
             var marker_displacement = 5;   // Specifies how much the marker moves
+            // PARAMETERS
         
             marker.on("click", () => {
                 var pos = map.latLngToLayerPoint(marker.getLatLng());
@@ -112,7 +116,7 @@ class Pin {
         }
     
         return;
-    }   // method which defines the bobbing animation of the marker.
+    }
 }
 
 
