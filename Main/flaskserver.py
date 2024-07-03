@@ -32,7 +32,10 @@ def index():    # load html page
 
 @app.route('/marker')
 def marker():   # REQUIRED TO WRITE WHEN LOADING NEW HTML TEMPLATES
-    return render_template('marker.html')
+    files = os.listdir(app.config['UPLOAD_PATH'])
+    return render_template('marker.html', files=files)
+
+
 
 @app.route('/marker', methods=['POST'])
 def upload_file():
@@ -70,8 +73,13 @@ def upload_file():
 
 @app.route('/uploads/<filename>')
 def upload(filename):
-    return send_from_directory(os.path.join(app.config['UPLOAD_PATH'], filename))
-
+    print(f"Attempting to fetch: {filename}")
+    try:
+        return send_from_directory(app.config['UPLOAD_PATH'], filename)  
+    except:
+        print(f"Failed to fetch: {filename}!")
+        # os.path.join(...)
+    
 # @login_required # flask decorator for a login requirement.
 
 if __name__ == '__main__':

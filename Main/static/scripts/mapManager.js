@@ -34,40 +34,51 @@ var map = L.map('map', {   // map initialization
 
 
 class Pin {
-    constructor(xy_pos=[0,0], message="Unnamed Marker", popup_on_creation=false) {
+    constructor(xy_pos=[0,0], message="Unnamed Marker", auto_open_popup=false) {
         try {
-            // console.log("Creating a new Pin at position:", xy_pos);
+            console.log("Creating a new Pin at position:", xy_pos);
 
+            // pop-up parameters
+            var popupMaxHeight = 500;
+            var popupMaxWidth = 500;
+            var popupContent = '<iframe width="400" height="400" src="/marker"></iframe>';
+            // pop-up parameters
+
+
+            // load icon & define how image is positioned
             var location_icon = L.icon({
-                iconUrl: '../static/assets/loc_icon.png',   // path from HTML file to icon.
+                iconUrl: '../static/assets/loc_icon.png',
                 iconSize: [40, 40],
                 iconAnchor: [20, 37]
             });
 
-            // Create Pin + Add Animation
+            // Create Pin + Define bound popup behavior.
             this.marker = new L.marker(xy_pos, {
                 icon: location_icon, 
                 opacity: 1.0, 
                 alt: message
             })
             .addTo(map)
-            .bindPopup(message);
+            .bindPopup(popupContent, {
+                offset: L.point(0, -10),
+                maxWidth:popupMaxHeight, 
+                maxHeight:popupMaxWidth,
+                autoClose:false,
+                closeOnClick:false
+                });
             
-            //Debug
-            console.log("Marker created:", this.marker);
+            // open popup on creation if parameter is true.
+            if(auto_open_popup) {
+                this.marker.openPopup()
+            }
 
             // Bind methods to ensure correct `this` context
             this.bobbingAnimation = this.bobbingAnimation.bind(this);
             this.createPopupMenu = this.createPopupMenu.bind(this);
 
             this.bobbingAnimation(this.marker);
-        
-            // Create popup on the marker if popup_on_creation = true
-            if (popup_on_creation) {
-                this.createPopupMenu(xy_pos);
-            }
         } catch (error) {
-            console.error("Error in Pin constructor:", error);
+            console.error("Error in Pin creation.", error);
         }
     }   // create pin and animate it + popup
     
@@ -75,35 +86,6 @@ class Pin {
         // I need to figure out how to select specific pins that are created.
         return;
     }   // method to change the pin message (NOT DONE)
-        
-    createPopupMenu(xy_pos=[0,0]) {
-        var popupMaxHeight = 700;
-        var popupMaxWidth = 500;
-
-        try {
-            var popupContent = '<iframe width="500" height="400" src="/marker"></iframe>';
-            
-            var popup = L.popup({
-                offset: L.point(0, -10),
-                maxWidth:popupMaxHeight, 
-                maxHeight:popupMaxWidth,
-                autoClose:false,
-                closeOnClick:false
-                });
-            popup.setLatLng(xy_pos,)
-                .addTo(map)
-                .setContent(popupContent);
-        } catch (error) {
-            console.error("Error in createPopupMenu:", error);
-        }
-        
-        return;
-    }   // method to create a new popup window for the marker.
-
-    openPopupMenu(marker) {
-        // Need to add an event for on a marker click.
-        return;
-    }   // method to re-open the popup window for the marker.
 
     changePopupContent(newContent) {
         this.marker.setPopupContent(newContent);
@@ -138,6 +120,7 @@ class Pin {
 new Pin([33.64279217005621, -117.84161034087451], "UCI", true);
 new Pin([33.6911993634157, -117.8889016003852], "South Coast Plaza Mall", false);
 new Pin([33.650521067513935, -117.74291965209282], "Irvine Spectrum", false);
+new Pin([33.68326860680547, -117.7207477031901], "This is James's House", false);
 
 
 // Add map scale in bottom left.
