@@ -67,16 +67,15 @@ class Pin {
                 closeOnClick:false
                 });
             
+            // Bind methods to ensure correct `this` context
+            this.bobbingAnimation = this.bobbingAnimation.bind(this);
+            this.bobbingAnimation(this.marker);
+
             // open popup on creation if parameter is true.
             if(auto_open_popup) {
                 this.marker.openPopup()
             }
 
-            // Bind methods to ensure correct `this` context
-            this.bobbingAnimation = this.bobbingAnimation.bind(this);
-            this.createPopupMenu = this.createPopupMenu.bind(this);
-
-            this.bobbingAnimation(this.marker);
         } catch (error) {
             console.error("Error in Pin creation.", error);
         }
@@ -99,7 +98,7 @@ class Pin {
             // PARAMETERS
             var marker_displacement = 5;   // Specifies how much the marker moves
             // PARAMETERS
-        
+
             marker.on("click", () => {
                 var pos = map.latLngToLayerPoint(marker.getLatLng());
                 pos.y -= marker_displacement;
@@ -114,7 +113,6 @@ class Pin {
         } catch (error) {
             console.error("Error in bobbingAnimation:", error);
         }
-    
         return;
     }
 }
