@@ -1,4 +1,44 @@
 
+Funny meme:
+'<iframe width="500" height="400"' +
+            'src="https://www.youtube.com/embed/pEg_d2f6myw"></iframe>';
+
+
+    createPopupMenu(xy_pos=[0,0]) {   // this might be redundant now.
+        var popupMaxHeight = 700;
+        var popupMaxWidth = 500;
+
+        try {
+            var popupContent = '<iframe width="500" height="400" src="/marker"></iframe>';
+            
+            var popup = L.popup({
+                offset: L.point(0, -10),
+                maxWidth:popupMaxHeight, 
+                maxHeight:popupMaxWidth,
+                autoClose:false,
+                closeOnClick:false
+                });
+            popup.setLatLng(xy_pos,)
+                .addTo(map)
+                .setContent(popupContent);
+        } catch (error) {
+            console.error("Error in createPopupMenu:", error);
+        }
+        
+        return;
+    }   // method to create a new popup window for the marker.
+
+
+// Create popup on the marker if popup_on_creation = true
+            // if (popup_on_creation) {
+            //    this.createPopupMenu(xy_pos);
+            //}
+
+
+
+
+
+
 
 function bobbingAnimation(marker) {
     // Marker Bobbing Animations

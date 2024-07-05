@@ -1,4 +1,6 @@
 
+// For Click events: https://stackoverflow.com/questions/16927793/marker-in-leaflet-click-event
+
 L.CursorHandler = L.Handler.extend( {   // Handles Cursor Events + Add Handler to Map
     addHooks: function () {
         this._map.on('dblclick', this._addMarker, this);   // Create listener for double click at startup
@@ -39,8 +41,8 @@ class Pin {
         try {
 
             // PARAMETERS
-            var popupMaxHeight = 500;
-            var popupMaxWidth = 500;
+            var popupMaxHeight = 450;
+            var popupMaxWidth = 450;
             var popupContent = '<iframe width="400" height="400" src="/marker"></iframe>';
             // PARAMETERS
 
