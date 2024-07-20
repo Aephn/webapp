@@ -1,6 +1,7 @@
 
-// For Click events: https://stackoverflow.com/questions/16927793/marker-in-leaflet-click-event
+const all_markers = L.markerClusterGroup();
 
+// For Click events: https://stackoverflow.com/questions/16927793/marker-in-leaflet-click-event
 L.CursorHandler = L.Handler.extend( {   // Handles Cursor Events + Add Handler to Map
     addHooks: function () {
         this._map.on('dblclick', this._addMarker, this);   // Create listener for double click at startup
@@ -118,7 +119,6 @@ class Pin {
         return;
     }
 }
-
 
 // Default Test Pins
 new Pin([33.64279217005621, -117.84161034087451], "UCI", true);

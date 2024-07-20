@@ -55,7 +55,7 @@ def upload_file():
 
         if upload and allowed_file(upload.filename):
             filename = secure_filename(upload.filename)   # cleans possible malicious filenames
-
+            
             if (filename):
                 filepath = os.path.join(app.config['UPLOAD_PATH'], filename)
                 upload.save(filepath)
