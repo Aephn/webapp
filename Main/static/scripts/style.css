@@ -1,0 +1,17 @@
+#map {
+    float: right;
+    width: 70%;
+    height: 95vh;
+}
+
+#photo-manager-interface {
+    float: left;
+    width: 30%;
+    height: 95vh;
+}
+
+#website-title {
+    max-width: fit-content;
+    margin-left: auto;
+    margin-right: auto;
+}

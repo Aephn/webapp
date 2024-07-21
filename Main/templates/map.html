@@ -6,23 +6,27 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ImgMappr</title>
 
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
+    <link rel="icon" href="../static/assets/loc_icon.png">
 
+    <!-- Leaflet + Markercluster Plugin -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
     <link rel="stylesheet" href="../static/packages/Leaflet.markercluster-1.4.1/dist/MarkerCluster.css">
     <link rel="stylesheet" href="../static/packages/Leaflet.markercluster-1.4.1/dist/MarkerCluster.Default.css">
 
-    <style>
-    #map {
-      width: 100%;
-      height: 95vh;
-    }
-    </style>
+    <link rel="stylesheet" href="../static/scripts/style.css">
 </head>
 
 
 <body>
+    <!-- TO-DO: Make the pane dynamic instead of fixed pixel length. -->
+    <div id="photo-manager-interface">
+      <div>
+        <h1 id="website-title">ImageMappr</h1>
+      </div>
+      <iframe width=390" height="400" src="/marker" frameBorder="0"></iframe> 
+    </div>
 
-    <!-- Create Map-->
+    <!-- Load Leaflet Map -->
     <div id="map"></div>
 
     <!-- leaflet js -->
@@ -30,10 +34,4 @@
     <script src="../static/packages/Leaflet.markercluster-1.4.1/dist/leaflet.markercluster.js"></script>
     <script src="../static/scripts/mapManager.js"></script> <!-- Run Separate File -->
   </body>
-
-
-<footer>
-  <p>I am a potato.</p>
-</footer>
-
 </html>

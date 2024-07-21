@@ -108,6 +108,10 @@ class Pin {
     }
 }
 
+function test() {
+    console.debug("test works.");
+}
+
 // default test pins
 var pins = [
     new Pin([33.64279217005621, -117.84161034087451], "UCI"),

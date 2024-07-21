@@ -16,8 +16,8 @@ if not os.path.exists(app.config['UPLOAD_PATH']):
 # file initalizations
 @app.route('/')
 def index():
-    """loads maptile.html for flask"""
-    return render_template('maptile.html')
+    """loads map.html for flask"""
+    return render_template('map.html')
 
 @app.route('/marker')
 def marker():
