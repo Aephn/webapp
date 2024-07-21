@@ -3,14 +3,6 @@ from flask import Flask, request, redirect, url_for, render_template, abort, \
 from werkzeug.utils import secure_filename   # import for secure file name processing
 import os
 
-# maybe good to look into: https://flask-wtf.readthedocs.io/en/1.2.x/
-# might help me simplify some things here in regard to the flask server.
-# Helpful: https://blog.miguelgrinberg.com/post/handling-file-uploads-with-flask
-# CSS loading gif https://www.w3schools.com/howto/howto_css_loader.asp
-# CSS Framework: https://bulma.io/
-# You can migrate to mapbox.js in leaflet? (https://stackoverflow.com/questions/12262163/what-are-leaflet-and-mapbox-and-what-are-their-differences)
-# Test? https://plnkr.co/edit/brRtxcm5g80EBhDJ
-
 app = Flask(__name__)
 app.config['UPLOAD_PATH'] = os.path.join(os.path.dirname(__file__), '../uploads')
 app.config['MAX_CONTENT_LENGTH'] = 1000 * 1000 # max file upload size of 1 mb.
@@ -34,7 +26,7 @@ def marker():
     return render_template('marker.html', files=files)
 
 
-
+# process files and ensure uploads are secure.
 @app.route('/marker', methods=['POST'])
 def upload_file():
     """Uploads files to /uploads and processes errors and malicious filenames"""
@@ -55,7 +47,7 @@ def upload_file():
 
         if upload and allowed_file(upload.filename):
             filename = secure_filename(upload.filename)   # cleans possible malicious filenames
-
+            
             if (filename):
                 filepath = os.path.join(app.config['UPLOAD_PATH'], filename)
                 upload.save(filepath)

@@ -1,5 +1,6 @@
 
-// For Click events: https://stackoverflow.com/questions/16927793/marker-in-leaflet-click-event
+const markerClusterGroup = L.markerClusterGroup();
+
 
 L.CursorHandler = L.Handler.extend( {   // Handles Cursor Events + Add Handler to Map
     addHooks: function () {
@@ -15,7 +16,6 @@ L.CursorHandler = L.Handler.extend( {   // Handles Cursor Events + Add Handler t
     }
 });
 L.Map.addInitHook('addHandler', 'cursor', L.CursorHandler);
-
 
 var map = L.map('map', {   // map initialization
     center: [0,0],
@@ -34,9 +34,14 @@ var map = L.map('map', {   // map initialization
     ],
 }).setView([33.68127006972219, -117.8194090597511], 13);    // Defines where map opens to on startup
 
+// Add map scale in bottom left.
+L.control.scale({maxWidth:100}).addTo(map);
 
+
+
+//Map Classes + Functions
 class Pin {
-    constructor(xy_pos=[0,0], message="Unnamed Marker", auto_open_popup=false) {
+    constructor(xy_pos=[0,0], message="Unnamed Marker") {
         /* Create and define parameters for the pin + attached popup */
         try {
 
@@ -55,12 +60,12 @@ class Pin {
             });
 
             // Create Pin + Define bound popup behavior.
-            this.marker = new L.marker(xy_pos, {
+            var marker = L.marker(xy_pos, {
                 icon: location_icon, 
                 opacity: 1.0, 
                 alt: message
+
             })
-            .addTo(map)
             .bindPopup(popupContent, {
                 offset: L.point(0, -10),
                 maxWidth:popupMaxHeight, 
@@ -69,36 +74,20 @@ class Pin {
                 closeOnClick:false
                 });
             
-            // Bind methods to ensure correct `this` context
-            this.bobbingAnimation = this.bobbingAnimation.bind(this);
-            this.bobbingAnimation(this.marker);
-
-            // open popup on creation if parameter is true.
-            if(auto_open_popup) {
-                this.marker.openPopup()
-            }
+            markerClusterGroup.addLayer(marker);
+            markerClusterGroup.addTo(map);
+            this.bobbingAnimation(marker);
 
         } catch (error) {
-            console.error("Error in Pin creation.", error);
+            console.error("Error in Pin Creation.", error);
         }
     }
     
-    changePinMessage(message="<p>ERROR -> Blank Message.</p>") {
-        /* Not exactly sure what to do with this yet. */
-        return;
-    }
-
-    changePopupContent(newContent="<p>ERROR -> Blank Content.</p>") {
-        /* Method to change popup content with new html code */
-        this.marker.setPopupContent(newContent);
-        return;
-    } 
-
-    bobbingAnimation(marker) {
+    bobbingAnimation(marker=NULL) {
         /* Method which defines and adds the bobbing animation for a marker. */
         try {
             // PARAMETERS
-            var marker_displacement = 5;   // Specifies how much the marker moves
+            var marker_displacement = 7;   // Specifies how much the marker moves
             // PARAMETERS
 
             marker.on("click", () => {
@@ -119,13 +108,70 @@ class Pin {
     }
 }
 
+// default test pins
+var pins = [
+    new Pin([33.64279217005621, -117.84161034087451], "UCI"),
+    new Pin([33.6911993634157, -117.8889016003852], "South Coast Plaza Mall"),
+    new Pin([33.650521067513935, -117.74291965209282], "Irvine Spectrum"),
+    new Pin([33.68326860680547, -117.7207477031901], "This is James's House"),
+    new Pin([33.6454, -117.8426], "Pin 1"),
+    new Pin([33.6460, -117.8421], "Pin 2"),
+    new Pin([33.6465, -117.8417], "Pin 3"),
+    new Pin([33.6471, -117.8412], "Pin 4"),
+    new Pin([33.6476, -117.8408], "Pin 5"),
+    new Pin([33.6482, -117.8403], "Pin 6"),
+    new Pin([33.6487, -117.8399], "Pin 7"),
+    new Pin([33.6493, -117.8394], "Pin 8"),
+    new Pin([33.6498, -117.8390], "Pin 9"),
+    new Pin([33.6504, -117.8385], "Pin 10"),
+    new Pin([33.6510, -117.8381], "Pin 11"),
+    new Pin([33.6515, -117.8376], "Pin 12"),
+    new Pin([33.6521, -117.8372], "Pin 13"),
+    new Pin([33.6526, -117.8367], "Pin 14"),
+    new Pin([33.6532, -117.8363], "Pin 15"),
+    new Pin([33.6537, -117.8358], "Pin 16"),
+    new Pin([33.6543, -117.8354], "Pin 17"),
+    new Pin([33.6548, -117.8349], "Pin 18"),
+    new Pin([33.6554, -117.8345], "Pin 19"),
+    new Pin([33.6560, -117.8340], "Pin 20"),
+    new Pin([33.6565, -117.8336], "Pin 21"),
+    new Pin([33.6571, -117.8331], "Pin 22"),
+    new Pin([33.6576, -117.8327], "Pin 23"),
+    new Pin([33.6582, -117.8322], "Pin 24"),
+    new Pin([33.6587, -117.8318], "Pin 25"),
+    new Pin([33.6593, -117.8313], "Pin 26"),
+    new Pin([33.6599, -117.8309], "Pin 27"),
+    new Pin([33.6604, -117.8304], "Pin 28"),
+    new Pin([33.6610, -117.8300], "Pin 29"),
+    new Pin([33.6615, -117.8295], "Pin 30"),
+    new Pin([33.6400, -117.8426], "Pin 31"),
+    new Pin([33.6395, -117.8421], "Pin 32"),
+    new Pin([33.6390, -117.8417], "Pin 33"),
+    new Pin([33.6385, -117.8412], "Pin 34"),
+    new Pin([33.6380, -117.8408], "Pin 35"),
+    new Pin([33.6375, -117.8403], "Pin 36"),
+    new Pin([33.6370, -117.8399], "Pin 37"),
+    new Pin([33.6365, -117.8394], "Pin 38"),
+    new Pin([33.6360, -117.8390], "Pin 39"),
+    new Pin([33.6355, -117.8385], "Pin 40"),
+    new Pin([33.6350, -117.8381], "Pin 41"),
+    new Pin([33.6345, -117.8376], "Pin 42"),
+    new Pin([33.6340, -117.8372], "Pin 43"),
+    new Pin([33.6335, -117.8367], "Pin 44"),
+    new Pin([33.6330, -117.8363], "Pin 45"),
+    new Pin([33.6325, -117.8358], "Pin 46"),
+    new Pin([33.6320, -117.8354], "Pin 47"),
+    new Pin([33.6315, -117.8349], "Pin 48"),
+    new Pin([33.6310, -117.8345], "Pin 49"),
+    new Pin([33.6305, -117.8340], "Pin 50")
+  ];
 
-// Default Test Pins
-new Pin([33.64279217005621, -117.84161034087451], "UCI", true);
-new Pin([33.6911993634157, -117.8889016003852], "South Coast Plaza Mall", false);
-new Pin([33.650521067513935, -117.74291965209282], "Irvine Spectrum", false);
-new Pin([33.68326860680547, -117.7207477031901], "This is James's House", false);
-
-
-// Add map scale in bottom left.
-L.control.scale({maxWidth:100}).addTo(map);
+  function getRandomCoordinate(base, range) {
+    return base + (Math.random() - 0.5) * range;
+  }
+  
+  for (let i = 1; i <= 250; i++) {
+    let lat = getRandomCoordinate(33.6454, 0.2); // +/- 0.025 degree range
+    let lon = getRandomCoordinate(-117.8426, 0.2); // +/- 0.025 degree range
+    pins.push(new Pin([lat, lon], `Pin ${i}`));
+  }
