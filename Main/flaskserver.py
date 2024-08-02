@@ -5,10 +5,10 @@ import os
 
 app = Flask(__name__)
 app.config['UPLOAD_PATH'] = os.path.join(os.path.dirname(__file__), '../uploads')
-app.config['MAX_CONTENT_LENGTH'] = 1000 * 1000 # max file upload size of 1 mb.
+app.config['MAX_CONTENT_LENGTH'] = 1000 * 1000   # max file upload size of 1 mb.
 Allowed_File_Extensions = {'jpg', 'png', 'jpeg'}
 
-# Ensure the upload folder exists (Probably not needed when migrating to a mongodb database)
+
 if not os.path.exists(app.config['UPLOAD_PATH']):
     os.makedirs(app.config['UPLOAD_PATH'])
 
@@ -39,7 +39,7 @@ def upload_file():
         print("No valid files submitted! Reloading.")
         return redirect(url_for('marker'))
 
-    for upload in request.files.getlist('image_file'):
+    for upload in request.files.getlist('image_file'):  # NOTE: Needs to change the error message.
         if upload.filename == '':
             print("Error: Blank File!")
             continue   # check if this is bad!
