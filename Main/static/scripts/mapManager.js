@@ -23,13 +23,20 @@ var map = L.map('map', {   // map initialization
     cursor: true,
     doubleClickZoom: false,   // disable double click zoom
     layers: [   // Jawg layer testing (ACCESS TOKEN INSIDE)
-        new L.tileLayer('https://tile.jawg.io/jawg-lagoon/{z}/{x}/{y}{r}.png?access-token={accessToken}', {
+        /* new L.tileLayer('https://tile.jawg.io/jawg-lagoon/{z}/{x}/{y}{r}.png?access-token={accessToken}', {
             attribution: '<a href="https://jawg.io" title="Tiles Courtesy of Jawg Maps" target="_blank">&copy; <b>Jawg</b>Maps</a> ' + // Jawg attrib.
             '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors ' +   // OSM attrib.
             '&copy <a href="https://www.flaticon.com/free-icons/maps-and-location">Flaticon</a> - Amazona Adorada',  // Flaticon attrib.
             minZoom: 0,
             maxZoom: 22,
             accessToken: 'Mk2XMa0mf65s97gaaKZ1Kta6vaoMsp3njJVG5uooQZT9SwflELWRhK5NLpKlA1AN'  // Be careful of this
+        }) */
+
+        new L.tileLayer('https://tile.jawg.io/jawg-dark/{z}/{x}/{y}{r}.png?access-token={accessToken}', {
+            attribution: '<a href="https://jawg.io" title="Tiles Courtesy of Jawg Maps" target="_blank">&copy; <b>Jawg</b>Maps</a> &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+            minZoom: 0,
+            maxZoom: 22,
+            accessToken: 'Mk2XMa0mf65s97gaaKZ1Kta6vaoMsp3njJVG5uooQZT9SwflELWRhK5NLpKlA1AN'
         })
     ],
 }).setView([33.68127006972219, -117.8194090597511], 13);    // Defines where map opens to on startup
@@ -108,6 +115,10 @@ class Pin {
     }
 }
 
+function test() {
+    console.debug("test works.");
+}
+
 // default test pins
 var pins = [
     new Pin([33.64279217005621, -117.84161034087451], "UCI"),
@@ -171,7 +182,7 @@ var pins = [
   }
   
   for (let i = 1; i <= 250; i++) {
-    let lat = getRandomCoordinate(33.6454, 0.2); // +/- 0.025 degree range
-    let lon = getRandomCoordinate(-117.8426, 0.2); // +/- 0.025 degree range
+    let lat = getRandomCoordinate(33.6454, 0.3); // +/- 0.15 degree range
+    let lon = getRandomCoordinate(-117.8426, 0.3); // +/- 0.15 degree range
     pins.push(new Pin([lat, lon], `Pin ${i}`));
   }

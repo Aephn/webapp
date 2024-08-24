@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ImgMappr</title>
+
+    <link rel="icon" href="../static/assets/loc_icon.png">
+
+    <!-- Leaflet + Markercluster Plugin -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
+    <link rel="stylesheet" href="../static/packages/Leaflet.markercluster-1.4.1/dist/MarkerCluster.css">
+    <link rel="stylesheet" href="../static/packages/Leaflet.markercluster-1.4.1/dist/MarkerCluster.Default.css">
+
+    <link rel="stylesheet" href="../static/scripts/style.css">
+</head>
+
+
+<body style="background-color:#282a2f;">
+    <!-- TO-DO: Make the pane dynamic instead of fixed pixel length. -->
+    <div id="photo-manager-interface">
+      <div>
+        <h1 id="center-text-white">ImageMappr</h1>
+        <h2 id="center-text-white">Upload an Image</h2>
+        <h4 id="center-text-white">(jpg, png, jpeg)</h4>
+      </div>
+      <iframe width=100%" height="100%" src="/marker" frameBorder="0"></iframe> 
+    </div>
+
+  
+
+    <!-- Load Leaflet Map -->
+    <div id="map">
+      <h2 id="center-text-white">TEXT HEREEEeeeeeeee</h2>
+    </div>
+
+    <!-- leaflet js -->
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script> 
+    <script src="../static/packages/Leaflet.markercluster-1.4.1/dist/leaflet.markercluster.js"></script>
+    <script src="../static/scripts/mapManager.js"></script> <!-- Run Separate File -->
+  </body>
+</html>
