@@ -8,10 +8,8 @@ app.config['UPLOAD_PATH'] = os.path.join(os.path.dirname(__file__), '../uploads'
 app.config['MAX_CONTENT_LENGTH'] = 1000 * 1000   # max file upload size of 1 mb.
 Allowed_File_Extensions = {'jpg', 'png', 'jpeg'}
 
-
 if not os.path.exists(app.config['UPLOAD_PATH']):
     os.makedirs(app.config['UPLOAD_PATH'])
-
 
 # file initalizations
 @app.route('/')
@@ -25,6 +23,21 @@ def marker():
     files = os.listdir(app.config['UPLOAD_PATH'])   # define parameter for marker.html
     return render_template('marker.html', files=files)
 
+@app.route('/loginpage')
+def login_page():
+    return render_template('loginpage.html')
+
+@app.route('/homepage')
+def homepage():
+    return render_template('homepage.html')
+
+def valid_file():
+    # Abstract the file processing so upload_file is more readable.
+    print("placeholder")
+
+def rename_userfilename():
+    # rename files to include a user id.
+    print("placeholder")
 
 # process files and ensure uploads are secure.
 @app.route('/marker', methods=['POST'])
@@ -39,10 +52,10 @@ def upload_file():
         print("No valid files submitted! Reloading.")
         return redirect(url_for('marker'))
 
-    for upload in request.files.getlist('image_file'):  # NOTE: Needs to change the error message.
+    for upload in request.files.getlist('image_file'):  # NOTE: Need to change the error message.
         if upload.filename == '':
             print("Error: Blank File!")
-            continue   # check if this is bad!
+            continue   # Skip blank files (check if this is bad!)
             # return 'Error: Blank File!'
 
         if upload and allowed_file(upload.filename):
@@ -61,7 +74,7 @@ def upload_file():
         print("File(s) Uploaded Successful!")
         return redirect(url_for('marker'))  # defines which html to return to
     else:
-        abort(418)   # I'm a teapot (NOT FOR RELEASE)
+        abort(418)   # NOTE: I'm a teapot (NOT FOR RELEASE)
 
 def allowed_file(filename):
     """check if submitted file is valid."""
@@ -70,7 +83,7 @@ def allowed_file(filename):
 
 @app.route('/uploads/<filename>')
 def upload(filename):
-    """Handles pushing complete file extensions to marker.html to display."""
+    """Handles pushing image files to marker.html to display."""
     print(f"Attempting to fetch: {filename}")
     try:
         return send_from_directory(app.config['UPLOAD_PATH'], filename)  

@@ -1,4 +1,5 @@
-
+// Migrate to TypeScript?
+// (For future files/functionality)
 const markerClusterGroup = L.markerClusterGroup();
 
 
