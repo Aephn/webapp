@@ -3,7 +3,7 @@ from flask import Flask, request, redirect, url_for, render_template, abort, \
 from werkzeug.utils import secure_filename   # import for secure file name processing
 import os
 
-import loginmanager.py
+# import loginmanager.py
 
 app = Flask(__name__)
 app.config['UPLOAD_PATH'] = os.path.join(os.path.dirname(__file__), '../uploads')
@@ -14,7 +14,6 @@ if not os.path.exists(app.config['UPLOAD_PATH']):
     os.makedirs(app.config['UPLOAD_PATH'])
 
 # Template loaders
-#
 @app.route('/')
 def index():
     """loads map.html for flask"""
@@ -36,12 +35,7 @@ def homepage():
 
 
 # Helper Functions
-#
-def valid_file():
-    # Abstract the file processing so upload_file is more readable.
-    print("placeholder")
-
-def rename_userfilename():
+def rename_file(directory: str):
     # rename files to include a user id.
     print("placeholder")
 
@@ -52,7 +46,6 @@ def allowed_file(filename):
 
 
 # Upload Functions
-#
 @app.route('/marker', methods=['POST'])
 def upload_file():
     """Uploads files to /uploads and processes errors and malicious filenames"""
@@ -62,7 +55,7 @@ def upload_file():
         print("No valid files submitted! (Reloading)")
         return redirect(url_for('marker'))
 
-    for upload in request.files.getlist('image_file'):  # NOTE: Need to change the error message.
+    for upload in request.files.getlist('image_file'):
         filename = secure_filename(upload.filename)   # cleans malicious filenames
         if filename == '':
             print("Error: Blank File!")
@@ -74,12 +67,10 @@ def upload_file():
                 upload.save(filepath)
                 valid_upload_submitted = True
     
-    # handle if all files submitted are invalid
-    if (valid_upload_submitted):
+    if (valid_upload_submitted): # NOTE: DEBUG test
         print("File(s) Uploaded Successful!")
-        return redirect(url_for('marker'))  # defines which html to return to
-    else:
-        abort(418)   # NOTE: I'm a teapot (NOT FOR RELEASE)
+    
+    return redirect(url_for('marker'))
 
 @app.route('/uploads/<filename>')
 def upload(filename): # need to rename for clarity.
@@ -90,5 +81,10 @@ def upload(filename): # need to rename for clarity.
     except:
         print(f"Failed to fetch: {filename}!")
 
+# Login Managers
+"""
+@login_required # flask decorator for a login requirement.
+def login():
+"""
 if __name__ == '__main__':
     app.run(debug=True)
