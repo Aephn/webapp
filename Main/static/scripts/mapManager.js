@@ -42,9 +42,10 @@ var map = L.map('map', {   // map initialization
     ],
 }).setView([33.68127006972219, -117.8194090597511], 13);    // Defines where map opens to on startup
 
-// Add map scale in bottom left.
+// Add map scale in bottom left + Control Opacity
 L.control.scale({maxWidth:100}).addTo(map);
-
+L.DomUtil.setOpacity(map.zoomControl.getContainer(), 0.5);
+// L.DomUtil.setOpacity(map.attribution.getContainer(), 0.5);  // doesn't seem to work?
 
 
 //Map Classes + Functions
@@ -57,8 +58,6 @@ class Pin {
             var popupMaxHeight = 450;
             var popupMaxWidth = 450;
             var popupContent = '<iframe width="400" height="400" src="/marker"></iframe>';
-            // PARAMETERS
-
 
             // load icon & define how image is positioned
             var location_icon = L.icon({
@@ -96,7 +95,6 @@ class Pin {
         try {
             // PARAMETERS
             var marker_displacement = 7;   // Specifies how much the marker moves
-            // PARAMETERS
 
             marker.on("click", () => {
                 var pos = map.latLngToLayerPoint(marker.getLatLng());

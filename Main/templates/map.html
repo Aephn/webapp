@@ -19,21 +19,25 @@
 
 <body style="background-color:#282a2f;">
     <!-- TO-DO: Make the pane dynamic instead of fixed pixel length. -->
-    <div id="photo-manager-interface">
-      <div>
-        <h1 id="center-text-white">ImageMappr</h1>
-        <h2 id="center-text-white">Upload an Image</h2>
-        <h4 id="center-text-white">(jpg, png, jpeg)</h4>
-      </div>
-      <iframe width=100%" height="100%" src="/marker" frameBorder="0"></iframe> 
+     
+    <!-- div for sidebar -->
+    <div id="side-bar">
+      
+      <!-- <div>
+        <h1 id="left-text-white">ImageMappr</h1>
+      </div> -->
+      <!-- <iframe width=100%" height="100%" src="/marker" frameBorder="0"></iframe>  -->
+      <!-- <div id="solid-header-box"></div>
+        <h1 id="left-text-white">ImageMappr</h1>
+      </div> -->
     </div>
 
+    <div id="solid-header-box">
+      <h1 id="left-text-white">ImageMappr</h1>
+    </div>
   
-
     <!-- Load Leaflet Map -->
-    <div id="map">
-      <h2 id="center-text-white">TEXT HEREEEeeeeeeee</h2>
-    </div>
+    <div id="map"></div>
 
     <!-- leaflet js -->
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script> 
